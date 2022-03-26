@@ -5,7 +5,7 @@
         "ecmaFeatures": {
             "jsx": true,
             "tsx": true
-        }
+        },
     },
     "env": {
         "browser": true,
