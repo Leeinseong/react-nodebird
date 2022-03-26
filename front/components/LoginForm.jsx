@@ -2,7 +2,8 @@ import React, { useState, useCallback, useMemo } from "react";
 import { Form, Input, Button } from "antd";
 import Link from "next/Link";
 import styled from "styled-components";
-
+import { useDispatch } from "react-redux";
+import { loginAction } from "../reducers/user";
 const FormWrapper = styled(Form)`
   padding: 10px;
 `;
@@ -13,6 +14,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const LoginForm = ({ setIsLogin }) => {
+  const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -28,8 +30,7 @@ const LoginForm = ({ setIsLogin }) => {
 
   const onSubmiitForm = useCallback(
     (e) => {
-      console.log(id, password);
-      setIsLogin(true);
+      dispatch(loginAction({ id, password }));
     },
     [id, password]
   );

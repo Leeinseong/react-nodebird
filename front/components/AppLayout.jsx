@@ -4,6 +4,8 @@ import Link from "next/Link";
 import { Menu, Input, Row, Col } from "antd";
 import styled from "styled-components";
 
+import { useSelector } from "react-redux";
+
 import LoginForm from "./LoginForm";
 import UserProfile from "./UserProfile";
 
@@ -14,7 +16,8 @@ const SearchInput = styled(Input.Search)`
 
 // 공통으로 사용하는 Layout
 const AppLayout = ({ children }) => {
-  const [isLogin, setIsLogin] = useState(false);
+  // 구조분해 할당
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   return (
     <div>
@@ -40,11 +43,7 @@ const AppLayout = ({ children }) => {
       </Menu>
       <Row>
         <Col xs={24} md={6}>
-          {isLogin ? (
-            <UserProfile setIsLogin={setIsLogin} />
-          ) : (
-            <LoginForm setIsLogin={setIsLogin} />
-          )}
+          {isLoggedIn ? <UserProfile /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {children}
