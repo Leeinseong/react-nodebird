@@ -6,17 +6,15 @@ import "antd/dist/antd.css";
 import wrapper from "../store/configureStore";
 
 // pages의 공통적으로 적용되는 부분, index.js의 부모라고 생각
-const NodeBird = ({ Component }) => {
-  return (
-    <>
-      <Head>
-        <meta charSet="utf-8" />
-        <title>인성_노드버드</title>
-      </Head>
-      <Component />
-    </>
-  );
-};
+const NodeBird = ({ Component }) => (
+  <>
+    <Head>
+      <meta charSet="utf-8" />
+      <title>인성_노드버드</title>
+    </Head>
+    <Component />
+  </>
+);
 
 NodeBird.propTypes = {
   Component: PropTypes.elementType.isRequired,

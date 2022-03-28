@@ -2,13 +2,17 @@ import React, { useRef, useCallback, useState, useEffect } from "react";
 import { Form, Input, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
+import useInput from "../hooks/useInput";
 import { addPost } from "../reducers/post";
 
 const PostForm = () => {
-  const { imagePaths, postAdded } = useSelector((state) => state.post);
-  const [text, setText] = useState("");
-
   const dispatch = useDispatch();
+  const { imagePaths, addPostLoading, addPostDone } = useSelector(
+    (state) => state.post
+  );
+
+  const [text, onText, setText] = useInput("");
+
   const imageInput = useRef();
 
   const onClickImageUpload = useCallback(() => {
@@ -16,18 +20,14 @@ const PostForm = () => {
   }, [imageInput.current]);
 
   useEffect(() => {
-    if (postAdded) {
+    if (addPostDone) {
       setText("");
     }
-  }, [postAdded]);
-
-  const onChangeText = useCallback((e) => {
-    setText(e.target.value);
-  }, []);
+  }, [addPostDone]);
 
   const onSubmit = useCallback(() => {
-    dispatch(addPost);
-  }, []);
+    dispatch(addPost(text));
+  }, [text]);
 
   return (
     <Form
@@ -37,7 +37,7 @@ const PostForm = () => {
     >
       <Input.TextArea
         value={text}
-        onChange={onChangeText}
+        onChange={onText}
         maxLength={140}
         placeholder="어떤 신기한 일이 있었나요?"
       />
